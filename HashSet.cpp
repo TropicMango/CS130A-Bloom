@@ -1,4 +1,5 @@
 #include "HashSet.h"
+#include <iostream>
 void HashSet::rehash() {
 }
 
@@ -12,6 +13,9 @@ HashSet::HashSet(){
 }
 
 HashSet::~HashSet(){
+	for (int i = 0; i < nslots; i++) {
+		std::cout << *slots[index] << std::endl;
+	}
 }
 
 void HashSet::insert(const std::string & value){

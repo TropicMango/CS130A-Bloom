@@ -4,8 +4,8 @@ BloomFilter::BloomFilter(int k, int m, std::string strfn, std::string intfn) {
 	this->k = k;
 	this->m = m;
 
-	bits = new uint64_t[(m / 64) +1];
-	intfns = new IntegerHash*[k];
+	this->bits = new uint64_t[(m / 64) +1];
+	this->intfns = new IntegerHash*[k];
 	if(strfn == "jenkins") {
 		this->strfn = new JenkinsHash();
 	}else if(strfn == "pearson"){
