@@ -32,8 +32,7 @@ void HashSet::insert(const std::string & value){
 	uint64_t index = intfn->hash(strfn->hash(value));
 	while (slots[index])
 		index++;
-	
-	*slots[index] = value;
+	slots[index] = new std::string(value);
 }
 
 bool HashSet::lookup(const std::string & value) const{
