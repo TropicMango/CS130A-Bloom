@@ -1,0 +1,4 @@
+bloom
+*.o
+*.sln
+*.vcxproj
