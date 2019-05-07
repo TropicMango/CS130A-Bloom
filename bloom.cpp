@@ -124,7 +124,10 @@ int main(int argc, char** argv) {
   const std::string TNEG = "[" + color("T. NEG", 36, c) + "] ";
   const std::string FPOS = "[" + color("F. POS", 33, c) + "] ";
   const std::string FNEG = "[" + color("F. NEG", 31, c) + "] ";
-
+  
+  int herro = n;
+  for(n=0; n<herro; n+=10){
+  
   std::string line;
   BloomFilter filter(k, m, s, i);
   HashSet hashset;
@@ -207,12 +210,14 @@ int main(int argc, char** argv) {
     std::cout << fneg << '\n';
   }
   else {
-    std::cout << "Inserted " << nstores << " items.\n";
+    /*std::cout << "Inserted " << nstores << " items.\n";
     std::cout << "Looked up " << nchecks << " items.\n";
     std::cout << " - True Positives:  " << color(std::to_string(tpos), 32, c) << '\n';
     std::cout << " - True Negatives:  " << color(std::to_string(tneg), 36, c) << '\n';
     std::cout << " - False Positives: " << color(std::to_string(fpos), 33, c) << '\n';
-    std::cout << " - False Negatives: " << color(std::to_string(fneg), 31, c) << '\n';
+    std::cout << " - False Negatives: " << color(std::to_string(fneg), 31, c) << '\n';*/
+    std::cout << std::to_string(fpos) << '\n';
+  }
   }
 
   return 0;
