@@ -2,3 +2,6 @@ bloom
 *.o
 *.sln
 *.vcxproj
+*.user
+*.filters
+*.vs
