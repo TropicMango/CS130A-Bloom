@@ -12,6 +12,9 @@ BloomFilter::BloomFilter(int k, int m, std::string strfn, std::string intfn) {
 		this->strfn = new JenkinsHash();
 	}else if(strfn == "pearson"){
 		this->strfn = new PearsonHash();
+	}else{
+		// default
+		this->strfn = new JenkinsHash();
 	}
 
 
@@ -22,6 +25,10 @@ BloomFilter::BloomFilter(int k, int m, std::string strfn, std::string intfn) {
 		for (int i = 0; i < k; i++)
 			this->intfns[i] = new ReciprocalHash(i, m);
 	} else if(intfn == "squareroot"){
+		for (int i = 0; i < k; i++)
+			this->intfns[i] = new SquareRootHash(i, m);
+	} else {
+		// default
 		for (int i = 0; i < k; i++)
 			this->intfns[i] = new SquareRootHash(i, m);
 	}

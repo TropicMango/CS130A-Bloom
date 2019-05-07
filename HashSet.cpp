@@ -39,8 +39,6 @@ void HashSet::insert(const std::string & value){
 			if (slots_storage[i])
 				this->insert(*slots_storage[i]);
 		}
-		
-		delete[](slots_storage);
 	}
 
 	nitems++;
