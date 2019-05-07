@@ -15,7 +15,7 @@ HashSet::~HashSet(){
 }
 
 void HashSet::insert(const std::string & value){
-	if (nitems > nslots) {
+	/*if (nitems > nslots) {
 		std::string** slots_storage = this->slots;
 
 		nslots *= 2;
@@ -26,7 +26,7 @@ void HashSet::insert(const std::string & value){
 		for(int i = 0; i < nslots / 2; i++) {
 			this->insert(*slots_storage[i]);
 		}
-	}
+	}*/
 	nitems++;
 
 	uint64_t index = intfn->hash(strfn->hash(value));
