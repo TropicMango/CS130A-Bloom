@@ -21,9 +21,11 @@ HashSet::~HashSet(){
 
 void HashSet::insert(const std::string & value){
 	if (nitems >= nslots - 1) {
+	
 		std::string** slots_storage = this->slots;
 		nslots *= 2;
 		nitems = 0;
+		
 		this->intfn = new SquareRootHash(0, nslots);
 		this->slots = new std::string*[nslots];
 
@@ -46,7 +48,7 @@ void HashSet::insert(const std::string & value){
 }
 
 bool HashSet::lookup(const std::string & value) const{
-	uint64_t index = intfn->hash(strfn->hash(value));
+	int index = intfn->hash(strfn->hash(value));
 	while (slots[index]) {
 		if (slots[index] == &value) {
 			return true;
