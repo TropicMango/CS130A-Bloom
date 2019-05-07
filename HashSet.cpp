@@ -14,7 +14,7 @@ HashSet::HashSet(){
 }
 
 HashSet::~HashSet(){
-	for (int i = 0; i < slots; i++) {
+	for (int i = 0; i < nslots; i++) {
 		if (slots[i]) {
 			delete(slots[i]);
 		}
