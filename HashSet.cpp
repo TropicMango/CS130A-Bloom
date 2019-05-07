@@ -5,7 +5,7 @@ void HashSet::rehash() {
 HashSet::HashSet(){
 	nslots = 64;
 	nitems = 0;
-	this->intfn = new SquareRootHash(0, nslots);
+	this->intfn = new SquareRootHash(1, nslots);
 	this->strfn = new JenkinsHash();
 	this->strfn2 = new PearsonHash();
 	this->slots = new std::string*[nslots];
