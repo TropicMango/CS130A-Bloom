@@ -8,7 +8,7 @@ HashSet::HashSet(){
 	this->intfn = new SquareRootHash(0, nslots);
 	this->strfn = new JenkinsHash();
 	this->strfn2 = new PearsonHash();
-	this->slots = new string*[nslots];
+	this->slots = new std::string*[nslots];
 }
 
 HashSet::~HashSet(){
@@ -16,25 +16,27 @@ HashSet::~HashSet(){
 
 void HashSet::insert(const std::string & value){
 	if (nitems > nslots) {
-		string** slots_storage = this->slots;
+		std::string** slots_storage = this->slots;
 
 		nslots *= 2;
+		nitems = 0;
 		this->intfn = new SquareRootHash(0, nslots);
-		this->slots = new string*[nslots];
+		this->slots = new std::string*[nslots];
 
-		for each (string* str in slots_storage) {
-			this->insert(str);
+		for(int i = 0; i < nslots / 2; i++) {
+			this->insert(*slots_storage[i]);
 		}
 	}
 	nitems++;
 
 	uint64_t index = intfn->hash(strfn->hash(value));
-	while (*slots[index] != NULL)
+	while (slots[index])
 		index++;
 	
 	*slots[index] = value;
 }
 
 bool HashSet::lookup(const std::string & value) const{
-	return false;
+	uint64_t index = intfn->hash(strfn->hash(value));
+	return slots[index];
 }
