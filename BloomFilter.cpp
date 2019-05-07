@@ -31,8 +31,6 @@ BloomFilter::~BloomFilter() {
 	delete[](bits);
 	delete[](intfns);
 	delete(strfn);
-	delete(k);
-	delete(m);
 }
 
 void BloomFilter::insert(const std::string & value) {

@@ -13,6 +13,13 @@ HashSet::HashSet(){
 }
 
 HashSet::~HashSet(){
+	/*for (int i = 0; i < nslots; i++) {
+		if (slots[i]) {
+			std::cout << "current: " << *slots[i] << std::endl;
+		} else {
+			std::cout << "current: " << std::endl;
+		}
+	}*/
 	delete[](slots);
 	delete(intfn);
 	delete(strfn);
@@ -32,6 +39,8 @@ void HashSet::insert(const std::string & value){
 			if (slots_storage[i])
 				this->insert(*slots_storage[i]);
 		}
+		
+		delete[](slots_storage);
 	}
 
 	nitems++;
