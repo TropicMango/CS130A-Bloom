@@ -14,13 +14,11 @@ HashSet::HashSet(){
 }
 
 HashSet::~HashSet(){
-	/*for (int i = 0; i < nslots; i++) {
+	for (int i = 0; i < slots; i++) {
 		if (slots[i]) {
-			std::cout << "current: " << *slots[i] << std::endl;
-		} else {
-			std::cout << "current: " << std::endl;
+			delete(slots[i]);
 		}
-	}*/
+	}
 	delete[](slots);
 	delete(intfn);
 	delete(strfn);
