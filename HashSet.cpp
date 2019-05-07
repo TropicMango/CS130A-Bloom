@@ -20,34 +20,41 @@ HashSet::~HashSet(){
 }
 
 void HashSet::insert(const std::string & value){
-	if (nitems == nslots) {
-	
+	if (nitems > nslots - 1) {
 		std::string** slots_storage = this->slots;
-		
 		nslots *= 2;
 		nitems = 0;
-		delete(intfn);
-		
-		this->intfn = new SquareRootHash(1, nslots);
+		this->intfn = new SquareRootHash(0, nslots);
 		this->slots = new std::string*[nslots];
 
-		for(int i = 0; i < nslots / 2; i++) {
-			std::cout << "--------" << slots_storage[i] << "--------" << std::endl;
-			this->insert(*slots_storage[i]);
-			std::cout << "-------inserted---------" << std::endl;
-			delete(slots_storage[i]);
+		for (int i = 0; i < nslots / 2; i++) {
+			if (slots_storage[i])
+				this->insert(*slots_storage[i]);
 		}
-		std::cout << "------3--------" << std::endl;
 	}
+
 	nitems++;
 
 	uint64_t index = intfn->hash(strfn->hash(value));
 	while (slots[index])
 		index++;
+	if (index > nslots - 1)
+		index = 0;
+
 	slots[index] = new std::string(value);
 }
 
 bool HashSet::lookup(const std::string & value) const{
 	uint64_t index = intfn->hash(strfn->hash(value));
-	return slots[index];
+	while (slots[index]) {
+		if (slots[index] == &value) {
+			return true;
+		}
+		index++;
+		if (index > nslots - 1)
+			index = 0;
+	}
+	return false;
 }
+
+
