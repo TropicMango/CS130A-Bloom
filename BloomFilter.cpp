@@ -5,6 +5,7 @@ BloomFilter::BloomFilter(int k, int m, std::string strfn, std::string intfn) {
 	this->m = m;
 
 	this->bits = new uint64_t[(m / 64) +1];
+	for(int i=0; i<(m/64)+1; bits[i++] = (uint64_t)0);
 	
 	this->intfns = new IntegerHash*[k];
 	for(int i=0; i<k; intfns[i++] = NULL);
