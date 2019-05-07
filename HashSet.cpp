@@ -35,17 +35,17 @@ void HashSet::insert(const std::string & value){
 
 	nitems++;
 
-	uint64_t index = intfn->hash(strfn->hash(value));
+	int index = intfn->hash(strfn->hash(value));
 	while (slots[index])
 		index++;
-	if (index > nslots - 1)
-		index = 0;
+		if (index > nslots - 1)
+			index = 0;
 
 	slots[index] = new std::string(value);
 }
 
 bool HashSet::lookup(const std::string & value) const{
-	uint64_t index = intfn->hash(strfn->hash(value));
+	int index = intfn->hash(strfn->hash(value));
 	while (slots[index]) {
 		if (slots[index] == &value) {
 			return true;
