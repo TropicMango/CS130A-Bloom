@@ -32,13 +32,16 @@ void HashSet::insert(const std::string & value){
 		std::string** slots_storage = this->slots;
 		nslots *= 2;
 		nitems = 0;
-		this->intfn = new SquareRootHash(0, nslots);
+		delete(intfn);
+		this->intfn = new SquareRootHash(1, nslots);
 		this->slots = new std::string*[nslots];
 
 		for (int i = 0; i < nslots / 2; i++) {
 			if (slots_storage[i])
 				this->insert(*slots_storage[i]);
 		}
+		
+		delete[](slots_storage);
 	}
 
 	nitems++;
