@@ -4,7 +4,7 @@ void HashSet::rehash() {
 }
 
 HashSet::HashSet(){
-	nslots = 1500;
+	nslots = 8;
 	nitems = 0;
 	this->intfn = new SquareRootHash(1, nslots);
 	this->strfn = new JenkinsHash();
@@ -25,7 +25,6 @@ void HashSet::insert(const std::string & value){
 		std::string** slots_storage = this->slots;
 		nslots *= 2;
 		nitems = 0;
-		
 		this->intfn = new SquareRootHash(0, nslots);
 		this->slots = new std::string*[nslots];
 
@@ -37,10 +36,10 @@ void HashSet::insert(const std::string & value){
 
 	nitems++;
 
-	int index = intfn->hash(strfn->hash(value));
-	while (slots[index]){
+	uint64_t index = intfn->hash(strfn->hash(value));
+	while (this->slots[index]){
 		index++;
-		if (index > nslots - 1)
+		if (index > (uint64_t)nslots - 1)
 			index = 0;
 	}
 
@@ -48,13 +47,13 @@ void HashSet::insert(const std::string & value){
 }
 
 bool HashSet::lookup(const std::string & value) const{
-	int index = intfn->hash(strfn->hash(value));
+	uint64_t index = intfn->hash(strfn->hash(value));
 	while (slots[index]) {
 		if (slots[index] == &value) {
 			return true;
 		}
 		index++;
-		if (index > nslots - 1)
+		if (index > (uint64_t)nslots - 1)
 			index = 0;
 	}
 	return false;
