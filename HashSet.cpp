@@ -4,13 +4,14 @@ void HashSet::rehash() {
 }
 
 HashSet::HashSet(){
-	nslots = 2048;
+	nslots = 8;
 	nitems = 0;
 	this->intfn = new SquareRootHash(1, nslots);
 	this->strfn = new JenkinsHash();
 	this->strfn2 = new PearsonHash();
 	this->slots = new std::string*[nslots];
 	for(int i=0; i<nslots; slots[i++] = NULL);
+	// valgrind initalization
 }
 
 HashSet::~HashSet(){
@@ -27,6 +28,7 @@ HashSet::~HashSet(){
 
 void HashSet::insert(const std::string & value){
 	if (nitems >= nslots - 1) {
+		// hash set expansion
 	
 		std::string** slots_storage = this->slots;
 		nslots *= 2;
@@ -35,6 +37,7 @@ void HashSet::insert(const std::string & value){
 		this->intfn = new SquareRootHash(1, nslots);
 		this->slots = new std::string*[nslots];
 		for(int i=0; i<nslots; slots[i++] = NULL);
+		// valgrind initalization
 
 		for (int i = 0; i < nslots / 2; i++) {
 			if (slots_storage[i]){
@@ -48,6 +51,7 @@ void HashSet::insert(const std::string & value){
 
 	nitems++;
 
+	// hash set probing
 	uint64_t index = this->intfn->hash(this->strfn->hash(value));
 	while (this->slots[index]){
 		index++;
@@ -60,6 +64,8 @@ void HashSet::insert(const std::string & value){
 }
 
 bool HashSet::lookup(const std::string & value) const{
+	int check = 0;
+	//in the case the list is full and searching for a none existant value
 	uint64_t index = this->intfn->hash(this->strfn->hash(value));
 	while (slots[index]) {
 		if (*slots[index] == value) {
@@ -69,6 +75,10 @@ bool HashSet::lookup(const std::string & value) const{
 		if (index > (uint64_t)nslots - 1) {
 			index = 0;
 		}
+		if (check > nslots - 1) {
+			break;
+		}
+		check++;
 	}
 	return false;
 }

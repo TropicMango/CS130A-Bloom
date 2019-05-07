@@ -12,6 +12,7 @@ BloomFilter::BloomFilter(int k, int m, std::string strfn, std::string intfn) {
 	for(int i=0; i<k; intfns[i++] = NULL);
 	// valgrind initalization
 	
+	// why can't cpp switch with strings T^T
 	if(strfn == "jenkins") {
 		this->strfn = new JenkinsHash();
 	}else if(strfn == "pearson"){
@@ -52,6 +53,7 @@ void BloomFilter::insert(const std::string & value) {
 	for (int i = 0; i < k; i++) {
 		uint16_t index = intfns[i]->hash(UIntValue);
 		bits[index / 64] = bits[index / 64] | (((uint64_t)1) << (index % 64));
+		// push bits into position then bitwise or to make the number at the position 1
 	}
 }
 
@@ -61,6 +63,7 @@ bool BloomFilter::lookup(const std::string & value) const {
 		uint64_t index = intfns[i]->hash(UIntValue);
 		uint64_t index_check = (((uint64_t)1) << (index % 64));
 		if ((bits[index / 64] & index_check) == 0)
+			// bit wise and to eliminate all bits that is not of interest
 			return false;
 	}
 	return true;
