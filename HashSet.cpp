@@ -4,12 +4,13 @@ void HashSet::rehash() {
 }
 
 HashSet::HashSet(){
-	nslots = 8;
+	nslots = 2048;
 	nitems = 0;
 	this->intfn = new SquareRootHash(1, nslots);
 	this->strfn = new JenkinsHash();
 	this->strfn2 = new PearsonHash();
 	this->slots = new std::string*[nslots];
+	for(int i=0; i<nslots; slots[i++] = NULL);
 }
 
 HashSet::~HashSet(){
@@ -33,8 +34,10 @@ void HashSet::insert(const std::string & value){
 		nslots *= 2;
 		nitems = 0;
 		delete(intfn);
+		delete[](slots);
 		this->intfn = new SquareRootHash(1, nslots);
 		this->slots = new std::string*[nslots];
+		for(int i=0; i<nslots; slots[i++] = NULL);
 
 		for (int i = 0; i < nslots / 2; i++) {
 			if (slots_storage[i]){
@@ -54,7 +57,8 @@ void HashSet::insert(const std::string & value){
 		if (index > (uint64_t)nslots - 1)
 			index = 0;
 	}
-
+	
+	delete(slots[index]);
 	slots[index] = new std::string(value);
 }
 
