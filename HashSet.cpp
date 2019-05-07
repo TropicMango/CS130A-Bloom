@@ -36,10 +36,11 @@ void HashSet::insert(const std::string & value){
 	nitems++;
 
 	int index = intfn->hash(strfn->hash(value));
-	while (slots[index])
+	while (slots[index]){
 		index++;
 		if (index > nslots - 1)
 			index = 0;
+	}
 
 	slots[index] = new std::string(value);
 }
