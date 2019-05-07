@@ -37,7 +37,7 @@ void HashSet::insert(const std::string & value){
 		this->slots = new std::string*[nslots];
 
 		for (int i = 0; i < nslots / 2; i++) {
-			if (this->slots_storage[i])
+			if (slots_storage[i])
 				this->insert(*slots_storage[i]);
 				delete(slots_storage[i]);
 		}
