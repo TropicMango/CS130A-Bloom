@@ -31,8 +31,7 @@ void HashSet::insert(const std::string & value){
 		std::string** slots_storage = this->slots;
 		nslots *= 2;
 		nitems = 0;
-		delete(intfn);
-		delete[](slots);
+		//delete(intfn);
 		this->intfn = new SquareRootHash(1, nslots);
 		this->slots = new std::string*[nslots];
 		for(int i=0; i<nslots; slots[i++] = NULL);
@@ -40,11 +39,11 @@ void HashSet::insert(const std::string & value){
 		for (int i = 0; i < nslots / 2; i++) {
 			if (slots_storage[i]){
 				this->insert(*slots_storage[i]);
-				delete(slots_storage[i]);
+				//delete(slots_storage[i]);
 			}
 		}
 		
-		delete[](slots_storage);
+		//delete[](slots_storage);
 	}
 
 	nitems++;
@@ -56,7 +55,7 @@ void HashSet::insert(const std::string & value){
 			index = 0;
 	}
 	
-	delete(slots[index]);
+	//delete(slots[index]);
 	slots[index] = new std::string(value);
 }
 
