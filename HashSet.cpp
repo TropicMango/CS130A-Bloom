@@ -1,6 +1,25 @@
 #include "HashSet.h"
 #include <iostream>
 void HashSet::rehash() {
+	// hash set expansion
+
+	std::string** slots_storage = this->slots;
+	nslots *= 2;
+	nitems = 0;
+	delete(intfn);
+	this->intfn = new SquareRootHash(1, nslots);
+	this->slots = new std::string*[nslots];
+	for (int i = 0; i < nslots; slots[i++] = NULL);
+	// valgrind initalization
+
+	for (int i = 0; i < nslots / 2; i++) {
+		if (slots_storage[i]) {
+			this->insert(*slots_storage[i]);
+			delete(slots_storage[i]);
+		}
+	}
+
+	delete[](slots_storage);
 }
 
 HashSet::HashSet(){
@@ -28,25 +47,7 @@ HashSet::~HashSet(){
 
 void HashSet::insert(const std::string & value){
 	if (nitems >= nslots - 1) {
-		// hash set expansion
-	
-		std::string** slots_storage = this->slots;
-		nslots *= 2;
-		nitems = 0;
-		delete(intfn);
-		this->intfn = new SquareRootHash(1, nslots);
-		this->slots = new std::string*[nslots];
-		for(int i=0; i<nslots; slots[i++] = NULL);
-		// valgrind initalization
-
-		for (int i = 0; i < nslots / 2; i++) {
-			if (slots_storage[i]){
-				this->insert(*slots_storage[i]);
-				delete(slots_storage[i]);
-			}
-		}
-		
-		delete[](slots_storage);
+		rehash();
 	}
 
 	nitems++;
